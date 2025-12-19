@@ -3,22 +3,11 @@ input = sys.stdin.readline
 
 N, S = map(int, input().split())
 series = list(map(int, input().split()))
-ans = 0
 
-
-def find_sum(idx, curr_sum):
-    global ans
-
-    if idx >= N:
-        return
-
-    curr_sum += series[idx]
-    if curr_sum == S:
-        ans += 1
-
-    find_sum(idx + 1, curr_sum - series[idx])
-    find_sum(idx + 1, curr_sum)
-
-
-find_sum(0, 0)
-print(ans)
+def count_subseq_sum(idx, current_sum):
+    if idx == N:
+        return 1 if current_sum == S else 0
+    return (count_subseq_sum(idx + 1, current_sum) +
+            count_subseq_sum(idx + 1, current_sum + series[idx]))
+answer = count_subseq_sum(0, 0)
+print(answer if S != 0 else answer - 1)
